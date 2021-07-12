@@ -1,6 +1,6 @@
-import { pkgUp, winPath } from '@umijs/utils';
+import { pkgUp } from '@umijs/utils';
 import assert from 'assert';
-import { dirname, extname, isAbsolute, join } from 'path';
+import { dirname, extname, isAbsolute } from 'path';
 
 interface IAlias {
   [key: string]: string;
@@ -76,10 +76,10 @@ export function getDepVersion(opts: {
       cwd: require.resolve(dep),
     });
     assert(pkg, `[MFSU] package.json not found for dep ${originDep}`);
-    assert(
-      winPath(pkg) !== winPath(join(opts.cwd, 'package.json')),
-      `[MFSU] package.json not found for dep ${originDep}`,
-    );
+    // assert(
+    //   winPath(pkg) !== winPath(join(opts.cwd, 'package.json')),
+    //   `[MFSU] package.json not found for dep ${originDep}`,
+    // );
     version = require(pkg).version;
   }
 
