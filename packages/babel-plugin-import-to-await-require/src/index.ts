@@ -21,6 +21,7 @@ export interface IOpts {
   webpackExternals?: IExternals;
   onTransformDeps?: Function;
   exportAllMembers?: Record<string, string[]>;
+  exclude?: RegExp;
 }
 
 export function specifiersToProperties(specifiers: any[]) {
@@ -92,7 +93,7 @@ function isMatchLib(
   alias: IAlias,
   webpackAlias: IAlias,
   webpackExternals: IExternals,
-  exclude: RegExp,
+  exclude?: RegExp,
 ) {
   if (matchAll) {
     if (path === 'umi' || path === 'dumi' || path === '@alipay/bigfish')
@@ -111,6 +112,8 @@ function isMatchLib(
     if (typeof webpackExternals === 'object' && webpackExternals[path]) {
       return false;
     }
+    // exclude moudles of monorepo which use symlink
+    // e.g. components/utils
     if (exclude && typeof exclude.test === 'function' && exclude.test(path)) {
       return false;
     }
@@ -172,7 +175,6 @@ export default function () {
                 opts.alias || {},
                 opts.webpackAlias || {},
                 opts.webpackExternals || {},
-                //@ts-ignore
                 opts.exclude,
               );
               opts.onTransformDeps?.({
@@ -238,7 +240,6 @@ export default function () {
                 opts.alias || {},
                 opts.webpackAlias || {},
                 opts.webpackExternals || {},
-                //@ts-ignore
                 opts.exclude,
               );
               opts.onTransformDeps?.({
@@ -307,7 +308,6 @@ export default function () {
                 opts.alias || {},
                 opts.webpackAlias || {},
                 opts.webpackExternals || {},
-                //@ts-ignore
                 opts.exclude,
               );
               opts.onTransformDeps?.({
@@ -395,7 +395,6 @@ export default function () {
             opts.alias || {},
             opts.webpackAlias || {},
             opts.webpackExternals || {},
-            //@ts-ignore
             opts.exclude,
           );
           opts.onTransformDeps?.({

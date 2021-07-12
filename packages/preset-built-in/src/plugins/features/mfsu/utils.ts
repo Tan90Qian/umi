@@ -43,7 +43,8 @@ export const figureOutExport = async (
 ): Promise<string> => {
   const absImportFrom = isAbsolute(importFrom)
     ? importFrom
-    : require.resolve(importFrom);
+    : // change for monorepo
+      require.resolve(importFrom);
   const filePath = getFilePath(absImportFrom);
 
   // @ts-ignore

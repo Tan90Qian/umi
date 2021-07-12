@@ -179,8 +179,8 @@ export default function (api: IApi) {
                 alias: {
                   [api.cwd]: '$CWD$',
                 },
-                //@ts-ignore
-                exclude: api.config.mfsu?.exclude,
+                // inject exclude option for modules of monorepo
+                exclude: api.config.mfsu && api.config.mfsu.exclude,
                 // @ts-ignore
                 exportAllMembers: api.config.mfsu?.exportAllMembers,
                 onTransformDeps(opts: {

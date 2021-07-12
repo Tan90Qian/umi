@@ -73,6 +73,7 @@ export function getDepVersion(opts: {
     version = tmpVersion;
   } else {
     const pkg = pkgUp.sync({
+      // change for monorepo
       cwd: require.resolve(dep),
     });
     assert(pkg, `[MFSU] package.json not found for dep ${originDep}`);
