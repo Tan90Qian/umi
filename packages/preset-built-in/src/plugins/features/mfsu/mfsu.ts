@@ -148,6 +148,7 @@ export default function (api: IApi) {
             mfName: joi.string(),
             exportAllMembers: joi.object(),
             chunks: joi.array().items(joi.string()),
+            exclude: joi.object().regex(),
           })
           .description('open mfsu feature');
       },
@@ -178,6 +179,8 @@ export default function (api: IApi) {
                 alias: {
                   [api.cwd]: '$CWD$',
                 },
+                //@ts-ignore
+                exclude: api.config.mfsu?.exclude,
                 // @ts-ignore
                 exportAllMembers: api.config.mfsu?.exportAllMembers,
                 onTransformDeps(opts: {

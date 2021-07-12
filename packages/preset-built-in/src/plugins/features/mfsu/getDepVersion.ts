@@ -73,7 +73,7 @@ export function getDepVersion(opts: {
     version = tmpVersion;
   } else {
     const pkg = pkgUp.sync({
-      cwd: join(opts.cwd, 'node_modules', dep),
+      cwd: require.resolve(dep),
     });
     assert(pkg, `[MFSU] package.json not found for dep ${originDep}`);
     assert(

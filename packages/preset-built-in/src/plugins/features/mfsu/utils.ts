@@ -10,7 +10,7 @@ import {
 } from 'fs';
 import { isAbsolute, join } from 'path';
 import { getDepReExportContent } from './getDepReExportContent';
-import { getFilePath, getProperCwd } from './getFilePath';
+import { getFilePath } from './getFilePath';
 
 export const copy = (fromDir: string, toDir: string) => {
   try {
@@ -43,7 +43,7 @@ export const figureOutExport = async (
 ): Promise<string> => {
   const absImportFrom = isAbsolute(importFrom)
     ? importFrom
-    : join(getProperCwd(cwd), 'node_modules', importFrom);
+    : require.resolve(importFrom);
   const filePath = getFilePath(absImportFrom);
 
   // @ts-ignore

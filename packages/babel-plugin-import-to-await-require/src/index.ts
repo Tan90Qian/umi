@@ -92,6 +92,7 @@ function isMatchLib(
   alias: IAlias,
   webpackAlias: IAlias,
   webpackExternals: IExternals,
+  exclude: RegExp,
 ) {
   if (matchAll) {
     if (path === 'umi' || path === 'dumi' || path === '@alipay/bigfish')
@@ -110,6 +111,10 @@ function isMatchLib(
     if (typeof webpackExternals === 'object' && webpackExternals[path]) {
       return false;
     }
+    if (exclude && typeof exclude.test === 'function' && exclude.test(path)) {
+      return false;
+    }
+    //TODO: 解决assert等与核心模块同名的三方库在require.resolve下判断错误的bug
 
     if (isAbsolute(path)) {
       return RE_NODE_MODULES.test(path) || RE_UMI_LOCAL_DEV.test(path);
@@ -167,6 +172,8 @@ export default function () {
                 opts.alias || {},
                 opts.webpackAlias || {},
                 opts.webpackExternals || {},
+                //@ts-ignore
+                opts.exclude,
               );
               opts.onTransformDeps?.({
                 source: d.source.value,
@@ -231,6 +238,8 @@ export default function () {
                 opts.alias || {},
                 opts.webpackAlias || {},
                 opts.webpackExternals || {},
+                //@ts-ignore
+                opts.exclude,
               );
               opts.onTransformDeps?.({
                 source: d.source.value,
@@ -298,6 +307,8 @@ export default function () {
                 opts.alias || {},
                 opts.webpackAlias || {},
                 opts.webpackExternals || {},
+                //@ts-ignore
+                opts.exclude,
               );
               opts.onTransformDeps?.({
                 source: d.source.value,
@@ -384,6 +395,8 @@ export default function () {
             opts.alias || {},
             opts.webpackAlias || {},
             opts.webpackExternals || {},
+            //@ts-ignore
+            opts.exclude,
           );
           opts.onTransformDeps?.({
             source: value,

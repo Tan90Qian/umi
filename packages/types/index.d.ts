@@ -377,6 +377,7 @@ export interface BaseIConfig extends IConfigCore {
     exportAllMembers?: Record<string, string[]>;
     mfName?: string;
     chunks?: string[];
+    exclude?: RegExp;
   };
   metas?: Partial<HTMLMetaElement>[];
   mpa?: object;
